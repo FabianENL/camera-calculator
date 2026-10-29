@@ -10,7 +10,7 @@ body{
     gap: 20px;
 }
 
-.aperture{
+.aperture, .focus{
     display: flex;
     text-align: center;
     align-items: center;
@@ -18,6 +18,6 @@ body{
     gap: 10px;
 }
 
-#aperture{
-    width: 20px;
+#aperture, focus{
+    width: 30px;
 }
