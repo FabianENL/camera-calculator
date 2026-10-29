@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Calculator</title>
+
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js"></script>
+</head>
+<body>
+    <p>DOF Calculator</p>
+    <div class=""><input type="number" id="focal-length" placeholder="50" size="4">  mm<br> </div>
+    <div class="aperture">
+        f / <span id="aperture">8</span> <input type="range" min="0" max="37" value="19" class="slider" id="apertureSlider" oninput="sliderUpdate()"> 
+    </div>
+</body>
+</html>
