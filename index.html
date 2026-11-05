@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="index.css">
     <script src="index.js"></script>
+    <script src="aperture.js"></script>
 </head>
 
 <body>
@@ -18,7 +19,7 @@
             <option value="1">6x7cm</option>
             <option value="2">6x6cm</option>
             <option value="3">6x4.5cm</option>
-            <option value="4" selected=>Full Frame (35mm)</option>
+            <option value="4" selected>Full Frame (35mm)</option>
             <option value="5">Half Frame</option>
             <option value="6">APS-C</option>
             <option value="7">Micro Four Thirds</option>
@@ -26,15 +27,16 @@
         </select>
     </div>
 
-    <div class=""><input type="number" id="focallength" value="50" size="4" onchange="focalLengthChange()"><br> </div>
+    <div class=""><input type="number" id="focallength" value="50" size="4" onchange="focalLengthChange()"> mm</div>
     <div class="aperture">
         f / <span id="aperture"></span> <input type="range" min="0" max="37" value="19" class="slider"
             id="apertureSlider" oninput="sliderUpdate()">
     </div>
     <div class="focus">
         focus: <span id="focus">10m (=33ft)</span>
-        <input type="range" min="0" max="1000" value="500" step="1" class="slider" id="focusSlider" oninput="focusSliderUpdate()">
     </div>
+    <canvas id="lens" width="720" height="160" tabindex="0" aria-label="Focus ring"></canvas>
+    <div class="hint">sleep, scroll of gebruik ← → om de focusring te draaien</div>
     <div id="result">min: center: max: </div>
     <div id="resultft">min: center: max: </div>
 </body>

@@ -23,7 +23,28 @@ body{
 }
 
 #focus{
-    width: 60px;
+    width: 200px;
+    text-align: left;
+}
+
+#lens{
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    cursor: grab;
+    touch-action: none;
+    outline: none;
+    border-radius: 8px;
+}
+
+#lens:active{
+    cursor: grabbing;
+}
+
+.hint{
+    font-size: 13px;
+    color: #888;
+    margin-top: -12px;
 }
 
 .result {
