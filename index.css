@@ -18,6 +18,14 @@ body{
     gap: 10px;
 }
 
-#aperture, focus{
+#aperture{
     width: 30px;
+}
+
+#focus{
+    width: 60px;
+}
+
+.result {
+    white-space: pre;
 }

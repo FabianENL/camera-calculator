@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +9,34 @@
     <link rel="stylesheet" href="index.css">
     <script src="index.js"></script>
 </head>
+
 <body>
     <p>DOF Calculator</p>
-    <div class=""><input type="number" id="focallength" placeholder="50" size="4" onchange="focalLengthChange()">  mm<br> </div>
+    <div class="format">
+        Format: <select name="format" id="format" onchange="setFormat()">
+            <option value="0">6x9cm</option>
+            <option value="1">6x7cm</option>
+            <option value="2">6x6cm</option>
+            <option value="3">6x4.5cm</option>
+            <option value="4" selected=>Full Frame (35mm)</option>
+            <option value="5">Half Frame</option>
+            <option value="6">APS-C</option>
+            <option value="7">Micro Four Thirds</option>
+            <option value="8">1 Inch</option>
+        </select>
+    </div>
+
+    <div class=""><input type="number" id="focallength" value="50" size="4" onchange="focalLengthChange()"><br> </div>
     <div class="aperture">
-        f / <span id="aperture">8</span>  <input type="range" min="0" max="37" value="19" class="slider" id="apertureSlider" oninput="sliderUpdate()"> 
+        f / <span id="aperture"></span> <input type="range" min="0" max="37" value="19" class="slider"
+            id="apertureSlider" oninput="sliderUpdate()">
     </div>
     <div class="focus">
-        focus: <span id="focus">20</span> m <input type="range" min="0.1" max="20" value="20" step="0.1" class="slider" id="focusSlider" oninput="focusSliderUpdate()"> 
+        focus: <span id="focus">10m (=33ft)</span>
+        <input type="range" min="0" max="1000" value="500" step="1" class="slider" id="focusSlider" oninput="focusSliderUpdate()">
     </div>
+    <div id="result">min: center: max: </div>
+    <div id="resultft">min: center: max: </div>
 </body>
+
 </html>
