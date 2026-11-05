@@ -7,6 +7,7 @@
     const stops = n => 2 * Math.log2(n);
     const angleOfIdx = i => DEG * stops(apertureHalfStops[i]);
 
+    const MAX_IDX = apertureHalfStops.indexOf(32);   // ring stopt bij f/32
     var cv, c, raw = 0, idx = 0, anim = 0;
 
     function txt(s, x, y, phi, color) {
@@ -53,6 +54,7 @@
         c.font = "bold 16px sans-serif";
         c.textAlign = "center";
         apertureHalfStops.forEach((v, i) => {
+            if (i > MAX_IDX) return;
             const phi = (angleOfIdx(i) - raw) * RAD;
             if (Math.abs(phi) > VIS) return;
             const x = X(phi), k = Math.cos(phi);
@@ -112,7 +114,7 @@
     }
 
     function setIdx(i) {
-        i = Math.max(0, Math.min(apertureHalfStops.length - 1, i));
+        i = Math.max(0, Math.min(MAX_IDX, i));
         if (i === idx) return;
         idx = i;
         if (navigator.vibrate) navigator.vibrate(8);   // korte klik bij elke stand
@@ -123,6 +125,7 @@
     function nearest(a) {
         let best = 0, bd = Infinity;
         apertureHalfStops.forEach((v, i) => {
+            if (i > MAX_IDX) return;
             const d = Math.abs(angleOfIdx(i) - a);
             if (d < bd) { bd = d; best = i; }
         });
@@ -164,7 +167,7 @@
             const scale = W / cv.getBoundingClientRect().width;
             raw -= ((e.clientX - lastX) * scale / R) / RAD;
             lastX = e.clientX;
-            raw = Math.max(angleOfIdx(0), Math.min(angleOfIdx(apertureHalfStops.length - 1), raw));
+            raw = Math.max(angleOfIdx(0), Math.min(angleOfIdx(MAX_IDX), raw));
             const n = nearest(raw);
             if (n !== idx) setIdx(n); else draw();
         });

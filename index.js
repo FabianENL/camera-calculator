@@ -45,7 +45,11 @@ function distOf(a) {
 
 // ---------- Tekenen ----------
 var canvas, ctx;
-const W = 720, H = 160, CX = 360, R = 330;
+const W = 720, H = 160, CX = 360;
+const ZOOM = 20;                   // 1 = oud; hoger = schaal verder uit elkaar
+const R = 330 * ZOOM;
+const WHEEL_GAIN = 0.0002;         // scrollgevoeligheid focus (lager = trager)
+const DRAG_GAIN = 1;
 const Y0 = 62, Y1 = 142;
 
 function fmtNum(n) {
@@ -94,8 +98,9 @@ function drawLens() {
 
     // ribbels (draaien mee)
     c.strokeStyle = "#3b3b3b";
-    const step = 3;
-    for (let k = Math.floor((af - 90) / step); k <= Math.ceil((af + 90) / step); k++) {
+    const step = 3 / ZOOM;
+    const span = Math.asin(Math.min(1, (W / 2 + 30) / R)) / RAD;   // zichtbaar deel van de ring
+    for (let k = Math.floor((af - span) / step); k <= Math.ceil((af + span) / step); k++) {
         const phi = (k * step - af) * RAD;
         if (Math.abs(phi) > VIS) continue;
         const x = X(phi);
@@ -272,16 +277,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const scale = W / canvas.getBoundingClientRect().width;
         const dx = (e.clientX - lastX) * scale;
         lastX = e.clientX;
-        turnRing(-(dx / R) / RAD);
+        turnRing(-(dx / R) / RAD * DRAG_GAIN);
     });
     canvas.addEventListener("pointerup", () => dragging = false);
     canvas.addEventListener("pointercancel", () => dragging = false);
     canvas.addEventListener("wheel", e => {
         e.preventDefault();
-        turnRing((e.deltaY + e.deltaX) * 0.08);
+        turnRing((e.deltaY + e.deltaX) * WHEEL_GAIN / ZOOM);   // scrollen schaalt mee met zoom
     }, { passive: false });
     canvas.addEventListener("keydown", e => {
-        const s = e.shiftKey ? 8 : 2;
+        const s = (e.shiftKey ? 8 : 2) / ZOOM;
         if (e.key === "ArrowLeft") { e.preventDefault(); turnRing(s); }
         if (e.key === "ArrowRight") { e.preventDefault(); turnRing(-s); }
     });
